@@ -15,10 +15,10 @@ def getUserInfo():
     formatValue = 'json'
 
     getInfoParameters = {
-        'method':getInfo,
+        'method': getInfo,
         'user': USERNAME,
         'api_key': API_KEY,
-        'format':formatValue
+        'format': formatValue
         }
 
     # Create the concatenated URL for API use
@@ -59,12 +59,12 @@ def getTopTracks():
         timePeriod = input("\nInvalid input. Please try again\n" + inputString)
     
     getTopTracksParameters = {
-        'method':getTopTracksMethod,
-        'user':USERNAME,
-        'period':timePeriod,
-        'limit':10,
-        'api_key':API_KEY,
-        'format':formatValue
+        'method': getTopTracksMethod,
+        'user': USERNAME,
+        'period': timePeriod,
+        'limit': 10,
+        'api_key': API_KEY,
+        'format': formatValue
         }
     
     getTopTracks_url = MAIN_API + urllib.parse.urlencode(getTopTracksParameters)
@@ -79,7 +79,7 @@ def getTopTracks():
             time.sleep(5)
             continue
 
-    track_table = PrettyTable(['Title','Playcount'])
+    track_table = PrettyTable(['Title', 'Playcount'])
     track_table.align = 'l'
     for eachTrack in json_track_data['toptracks']['track']:
         track_table.add_row([eachTrack['name'], eachTrack['playcount']])
@@ -93,7 +93,7 @@ def getTopArtists():
 
     getTopArtistsMethod = "user.getTopArtists"
     formatValue = "json"
-    input_set = {'overall','7day', '1month', '3month', '6month', '12month'}
+    input_set = {'overall', '7day', '1month', '3month', '6month', '12month'}
 
     print("\nInput the time period desired in the following format:")
     print("'overall','7day', '1month', '3month', '6month', '12month'")
@@ -106,12 +106,12 @@ def getTopArtists():
         timePeriod = input("\nInvalid input. Please try again\n" + inputString)
     
     getTopArtistsParameters = {
-        'method':getTopArtistsMethod,
-        'user':USERNAME,
-        'period':timePeriod,
-        'limit':10,
-        'api_key':API_KEY,
-        'format':formatValue
+        'method': getTopArtistsMethod,
+        'user': USERNAME,
+        'period': timePeriod,
+        'limit': 10,
+        'api_key': API_KEY,
+        'format': formatValue
         }
 
     getTopArtists_url = MAIN_API + urllib.parse.urlencode(getTopArtistsParameters)
@@ -126,7 +126,7 @@ def getTopArtists():
             time.sleep(5)
             continue
 
-    artist_table = PrettyTable(['Artist','Playcount'])
+    artist_table = PrettyTable(['Artist', 'Playcount'])
     artist_table.align = 'l'
     for eachArtist in json_artist_data['topartists']['artist']:
         artist_table.add_row([eachArtist['name'], eachArtist['playcount']])
