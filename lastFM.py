@@ -133,7 +133,54 @@ def getTopArtists():
     
     print(artist_table)
 
- 
+
+def getTopAlbums():
+    '''This function will print the user's top albums
+    based on the time period the user specifies''' 
+
+    getTopAlbumsMethod = "user.getTopAlbums"
+    formatValue = "json"
+    input_set = {'overall', '7day', '1month', '3month', '6month', '12month'}
+
+    print("\nInput the time period desired in the following format:")
+    print("'overall','7day', '1month', '3month', '6month', '12month'")
+
+    inputString = "\nInput the time period desired in the following format:\n'overall','7day', '1month', '3month', '6month', '12month'"
+    # Get user input for the time range
+    timePeriod = input()
+
+    while timePeriod not in input_set:
+        timePeriod = input("\nInvalid input. Please try again\n" + inputString)
+    
+    getTopAlbumParameters = {
+        'method': getTopAlbumsMethod,
+        'user': USERNAME,
+        'period': timePeriod,
+        'limit': 10,
+        'api_key': API_KEY,
+        'format': formatValue
+        }
+
+    getTopAlbums_url = MAIN_API + urllib.parse.urlencode(getTopAlbumParameters)
+
+    json_album_data = ''
+    while json_album_data == '':
+        try:
+            json_album_data = requests.get(getTopAlbums_url).json()
+        except requests.exceptions.ConnectionError:
+            print("Connection refused by server")
+            print("Trying again in 5 seconds")
+            time.sleep(5)
+            continue
+
+    album_table = PrettyTable(['Album', 'Artist', 'Playcount'])
+    album_table.align = 'l'
+    for eachAlbum in json_album_data['topalbums']['album']:
+        album_table.add_row([eachAlbum['name'], eachAlbum['artist']['name'], eachAlbum['playcount']])
+    
+    print(album_table)
+
+
 def displayFunctions():
     print("The following are available commands:\n")
     print("getTopArtists \t- Displays the top 10 most played artists in a specified time period")
@@ -152,7 +199,8 @@ def main():
     function_dict = {
         'getTopTracks': getTopTracks,
         'getTopArtists': getTopArtists,
-        'q': quit, 
+        'getTopAlbums': getTopAlbums,
+        'q': quit,
         'quit': quit
         }
     userInput = ''
