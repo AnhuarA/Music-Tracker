@@ -79,10 +79,10 @@ def getTopTracks():
             time.sleep(5)
             continue
 
-    track_table = PrettyTable(['Title', 'Playcount'])
+    track_table = PrettyTable(['Title', 'Artist', 'Playcount'])
     track_table.align = 'l'
     for eachTrack in json_track_data['toptracks']['track']:
-        track_table.add_row([eachTrack['name'], eachTrack['playcount']])
+        track_table.add_row([eachTrack['name'], eachTrack['artist']['name'], eachTrack['playcount']])
     
     print(track_table)
 
